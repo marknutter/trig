@@ -1,0 +1,10 @@
+*.orig
+*.log
+.DS_Store*
+.sass-cache/
+xcuserdata/
+*.xcuserstate
+*.rdb
+*.sublime-workspace
+node_modules
+local.properties

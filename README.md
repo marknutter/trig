@@ -1,4 +1,4 @@
 trig
 ====
 
-Trig Web Framework
+Trig Famework
