@@ -1,12 +1,8 @@
-var app = angular.module('app',
-[ 'MainCtrl'])
+var app = angular.module('app', [])
 .config(['$routeProvider', function ($routeProvider) {
 $routeProvider
   .when('/', {
-    templateUrl:'views/main.html',
-    controller:'MainCtrl'
+    controller:'MainCtrl',
+    templateUrl:'views/main.html'
    })
-}])
-.run(['$rootScope', function($rootScope) {
-
 }]);
