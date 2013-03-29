@@ -34,7 +34,8 @@
     "grunt": "0.4.x",
     "grunt-contrib": "~0.5.0",
     "grunt-preprocess": "2.0.x",
-    "grunt-regarde": "0.1.x"
+    "grunt-regarde": "0.1.x",
+    "grunt-env": "0.2.x"
   },
   "main": "index",
   "scripts": {

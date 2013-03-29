@@ -137,8 +137,8 @@ function createApp(path) {
   emptyDirectory(path, function(empty){
     if (empty || program.force) {
       grunt.task.run(['copy:scaffold']);
-      console.log('   \033[36mgenerating scaffold\033[0m');
       grunt.task.start();
+      console.log('   \033[36mapp created at ' + path + '\033[0m');
     } else {
       program.confirm('destination is not empty, continue? ', function(ok){
         if (ok) {
