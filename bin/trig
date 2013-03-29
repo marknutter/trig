@@ -23,6 +23,8 @@ var node_modules_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '
 loadNpmTasks('grunt-contrib', node_modules_path);
 loadNpmTasks('grunt-preprocess', node_modules_path);
 loadNpmTasks('grunt-env', node_modules_path);
+loadNpmTasks('grunt-regarde', node_modules_path);
+
 
 program
   .version(version)
@@ -36,11 +38,20 @@ if (main_command == "new") {
   var path = program.args[0] || '.';
 }
 
+var lrSnippet = require(node_modules_path+'node_modules/grunt-contrib/node_modules/grunt-contrib-livereload/lib/utils').livereloadSnippet;
+
+var folderMount = function folderMount(connect, point) {
+  return connect.static(npath.resolve(point));
+};
+
 grunt.initConfig({
   connect: {
-    server: {
+    livereload: {
       options: {
         port: 8000,
+        middleware: function(connect, options) {
+          return [lrSnippet, folderMount(connect, options.base)]
+        },
         base: 'stage/app'
       }
     }
@@ -66,6 +77,18 @@ grunt.initConfig({
         }
       ]
     }
+  },
+  regarde: {
+    app: {
+      files: ['app/**/*.js', 'app/**/*.html'],
+      tasks: ['env:development', 'copy:stage', 'preprocess', 'livereload'],
+      options: {
+        spawn: false
+      }
+    }
+  },
+  livereload: {
+    port: 35729 // Default livereload listening port.
   },
   env: {
     development: {
@@ -102,7 +125,7 @@ switch(main_command) {
 
 function runServer() {
   var path = "";
-  grunt.task.run(['env:development', 'copy:stage', 'preprocess', 'connect']);
+  grunt.task.run(['env:development', 'copy:stage', 'preprocess', 'livereload-start', 'connect', 'regarde']);
   console.log('   \033[36mapp running at localhost:8000\033[0m');
   grunt.task.start();
 }
