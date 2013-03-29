@@ -8,9 +8,28 @@
 
     <ng-view></ng-view>
 
+
+
+
+
+
+  <!-- @if ENV='production' -->
+  <script src="oqodo.min.js"></script>
+  <!-- @endif -->
+
+  <!-- @if ENV='development' -->
+  <!-- libs -->
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-resource.js"></script>
+  <!-- app -->
   <script src="app.js"></script>
+  <!-- controllers -->
   <script src="controllers/MainController.js"></script>
+  <!-- models -->
+  <!-- directives -->
+  <!-- services -->
+  <!-- filters -->
+  <!-- @endif -->
+
   </body>
 </html>
