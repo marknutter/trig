@@ -17,7 +17,9 @@
     "framework",
     "web",
     "angular",
-    "quick",
+    "opinionated",
+    "generator",
+    "runner",
     "app"
   ],
   "repository": "git://github.com/marknutter/trig.git",
@@ -38,9 +40,6 @@
     "grunt-env": "0.2.x"
   },
   "main": "index",
-  "scripts": {
-
-  },
   "private": true,
   "engines": {
     "node": "*"
