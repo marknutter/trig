@@ -1,4 +1,4 @@
-var app = angular.module('app', [])
+angular.module('app', ['MainController'])
 .config(['$routeProvider', function ($routeProvider) {
 $routeProvider
   .when('/', {

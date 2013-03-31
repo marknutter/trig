@@ -1,8 +1,9 @@
 'use strict';
 
-app.controller('MainController',
-  function MainController($scope, $location) {
+angular.module('MainController', []).
+  controller('MainController',
+  function($scope, $location) {
 
-  $scope.trig_is = "Mathematical!"
+  $scope.trig_is = "Mathematical!";
 
 });

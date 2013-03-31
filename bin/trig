@@ -140,7 +140,7 @@ grunt.initConfig({
   }
 });
 
-grunt.log.muted = false;
+grunt.log.muted = true;
 
 
 grunt.registerTask('stagecopy', ['env:development', 'copy:stage', 'copy:deps', 'preprocess']);
