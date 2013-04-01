@@ -11,266 +11,61 @@ var mkdirp = require('mkdirp');
 var pkg = require('../package.json');
 var version = pkg.version;
 var os = require('os');
-var fs = require('fs');
-var npath = require('path');
-var grunt = require('grunt');
+fs = require('fs');
+npath = require('path');
+grunt = require('grunt');
 var runner = require('karma').runner;
 var server = require('karma').server;
+var eol = 'win32' == os.platform() ? '\r\n' : '\n';
+base_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../');
+require('../lib/trig');
+require('../lib/gruntConfig');
+require('../lib/tasks');
 
-var eol = 'win32' == os.platform() ? '\r\n' : '\n'
-var scaffold_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../scaffold');
-var base_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../');
+grunt.initConfig(gruntConfig);
 
-loadNpmTasks('grunt-contrib', base_path);
-loadNpmTasks('grunt-preprocess', base_path);
-loadNpmTasks('grunt-env', base_path);
-loadNpmTasks('grunt-regarde', base_path);
-// loadNpmTasks('grunt-karma', base_path);
+program
+  .command('new <path>')
+  .description('create a new trig app at the given path')
+  .action(function(path){
+    console.log("creating a new app!");
+    trig.createApp(path);
+  });
 
+program
+  .command('server')
+  .description('run the trig app server')
+  .action(function() {
+    trig.runServer();
+  });
+
+program
+  .command('test')
+  .description('run the test suite')
+  .action(function() {
+    grunt.task.run(['stagecopy', 'karma:watch']);
+    console.log('   \033[36mderiving tests\033[0m');
+    grunt.task.start();
+  });
+
+program
+  .command('build')
+  .description('create a production version of the app')
+  .action(function() {
+    grunt.task.run(['stagecopy']);
+    console.log(base_path + "deps/test/**/*");
+    console.log('   \033[36mformulating a build\033[0m');
+    grunt.task.start();
+  });
 
 program
   .version(version)
-  .option('-s, --sessions', 'add session support')
   .option('-f, --force', 'force on non-empty directory')
+  .option('-p, --port', 'specify which port to run the server on')
   .parse(process.argv);
 
-var main_command = program.args.shift()
-
-if (main_command == "new") {
-  var path = program.args[0] || '.';
-}
-
-var lrSnippet = require(base_path+'node_modules/grunt-contrib/node_modules/grunt-contrib-livereload/lib/utils').livereloadSnippet;
-
-var folderMount = function folderMount(connect, point) {
-  return connect.static(npath.resolve(point));
-};
-
-grunt.initConfig({
-  connect: {
-    livereload: {
-      options: {
-        port: 8000,
-        middleware: function(connect, options) {
-          return [lrSnippet, folderMount(connect, options.base)]
-        },
-        base: '.stage/app'
-      }
-    }
-  },
-  copy: {
-    scaffold: {
-      files:[
-        {
-          dest: path + '/',
-          src: "**/*",
-          cwd: scaffold_path,
-          expand: true
-        }
-      ]
-    },
-    deps: {
-      files: [
-        {
-          dest: '.stage/app/lib/angular/',
-          src: base_path + "deps/app/lib/angular/*",
-          cwd: "",
-          expand: true,
-          flatten: true
-        }
-      ]
-    },
-    stage: {
-      files:[
-        {
-          dest: '.stage/',
-          src: "app/**/*",
-          cwd: "",
-          expand: true
-        }
-      ]
-    }
-  },
-  karma: {
-    basePath: '../../',
-
-    unit: {
-      configFile: 'test/config/karma.conf.js',
-      basePath: '../../',
-      singleRun: true,
-      autoWatch: false
-    },
-    watch: {
-      configFile: 'test/config/karma.conf.js',
-      autoWatch: true,
-      singleRun: false,
-      basePath: '../../'
-    },
-    e2e: {
-      configFile: 'test/config/karma-e2e.conf.js',
-      basePath: '../../'
-    }
-  },
-  regarde: {
-    app: {
-      files: ['app/**/*.js', 'app/**/*.html'],
-      tasks: ['env:development', 'copy:stage', 'preprocess', 'livereload'],
-      options: {
-        spawn: false
-      }
-    }
-  },
-  livereload: {
-    port: 35729 // Default livereload listening port.
-  },
-  env: {
-    development: {
-      ENV: 'development'
-    },
-    production: {
-      ENV: 'production'
-    }
-  },
-  preprocess: {
-    multifile: {
-      files: {
-        '.stage/app/index.html' : 'app/index.html'
-      }
-    }
-  }
-});
-
-grunt.log.muted = true;
 
 
-grunt.registerTask('stagecopy', ['env:development', 'copy:stage', 'copy:deps', 'preprocess']);
-
-grunt.registerMultiTask('karma', 'run karma.', function() {
-  var done = this.async();
-  var options = this.options();
-  var data = this.data;
-  //merge options onto data, with data taking precedence
-  Object.keys(this.options()).forEach(function(prop){
-    if (!data[prop]) data[prop] = options[prop];
-  });
-
-  if (data.configFile) {
-    data.configFile = grunt.template.process(data.configFile);
-  }
-  //support `karma run`, useful for grunt watch
-  if (this.flags.run){
-    runner.run(data, finished.bind(done));
-    return;
-  }
-  server.start(data, finished.bind(done));
-});
-
-function finished(code){ process.exit() }
-
-switch(main_command) {
-  case "new":
-    console.log(path);
-    createApp(path);
-    break;
-  case "server":
-    runServer();
-    break;
-  case "test":
-    grunt.task.run(['stagecopy', 'karma:watch']);
-    console.log('   \033[36mrunning tests\033[0m');
-
-    grunt.task.start();
-    break;
-  case "build":
-    if (program.args[0] == "stage") {
-      grunt.task.run(['stagecopy']);
-      console.log(base_path + "deps/test/**/*");
-      console.log('   \033[36mapp running at localhost:8000\033[0m');
-      grunt.task.start();
-    }
-}
-
-
-
-function runServer() {
-  var path = "";
-  grunt.task.run(['stagecopy', 'livereload-start', 'connect', 'regarde']);
-  console.log('   \033[36mapp running at localhost:8000\033[0m');
-  grunt.task.start();
-}
-
-
-
-
-function createApp(path) {
-  emptyDirectory(path, function(empty){
-    if (empty || program.force) {
-      grunt.task.run(['copy:scaffold']);
-      grunt.task.start();
-      console.log('   \033[36mapp created at ' + path + '\033[0m');
-    } else {
-      program.confirm('destination is not empty, continue? ', function(ok){
-        if (ok) {
-          process.stdin.destroy();
-          grunt.task.start();
-        } else {
-          abort('aborting');
-        }
-      });
-    }
-  });
-}
-
-
-function emptyDirectory(path, fn) {
-  fs.readdir(path, function(err, files){
-    if (err && 'ENOENT' != err.code) throw err;
-    fn(!files || !files.length);
-  });
-}
-
-var loadTaskDepth = 0;
-
-function loadNpmTasks(name, root_path) {
-  loadTasksMessage('"' + name + '" local Npm module');
-  var root = npath.resolve(root_path + 'node_modules');
-  var pkgfile = npath.join(root, name, 'package.json');
-  var pkg = grunt.file.exists(pkgfile) ? grunt.file.readJSON(pkgfile) : {keywords: []};
-
-  // Process collection plugins.
-  if (pkg.keywords && pkg.keywords.indexOf('gruntcollection') !== -1) {
-    loadTaskDepth++;
-    Object.keys(pkg.dependencies).forEach(function(depName) {
-      // Npm sometimes pulls dependencies out if they're shared, so find
-      // upwards if not found locally.
-      var filepath = grunt.file.findup('node_modules/' + depName, {
-        cwd: npath.resolve(root_path + 'node_modules', name),
-        nocase: true
-      });
-      if (filepath) {
-        // Load this task plugin recursively.
-        loadNpmTasks(npath.relative(root, filepath), root_path);
-      }
-    });
-    loadTaskDepth--;
-    return;
-  }
-
-  // Process task plugins.
-  var tasksdir = npath.join(root, name, 'tasks');
-  if (grunt.file.exists(tasksdir)) {
-    grunt.loadTasks(tasksdir);
-  } else {
-    grunt.log.error('Local Npm module "' + name + '" not found. Is it installed?');
-  }
-};
-
-function loadTasksMessage(info) {
-  // Only keep track of names of top-level loaded tasks and collections,
-  // not sub-tasks.
-  if (loadTaskDepth === 0) { lastInfo = info; }
-  grunt.verbose.subhead('Registering ' + info + ' tasks.');
-}
 
 
 
