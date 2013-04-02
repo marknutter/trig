@@ -1,7 +1,7 @@
 ![trig logo](https://dl.dropbox.com/u/205542/trig_logo_teal.png)
 
 
-#A fastidiously opinionated angular.js framework
+#A Fastidiously Opinionated Angular.js Framework
 
 ## Installation
 
