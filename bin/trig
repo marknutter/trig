@@ -14,8 +14,8 @@ var os = require('os');
 fs = require('fs');
 npath = require('path');
 grunt = require('grunt');
-var runner = require('karma').runner;
-var server = require('karma').server;
+runner = require('karma').runner;
+server = require('karma').server;
 var eol = 'win32' == os.platform() ? '\r\n' : '\n';
 base_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../');
 require('../lib/trig');
@@ -49,6 +49,15 @@ program
   });
 
 program
+  .command('clean')
+  .description('clean up temporary files')
+  .action(function() {
+    grunt.task.run(['clean']);
+    console.log('   \033[36mtidying up!\033[0m');
+    grunt.task.start();
+  });
+
+program
   .command('build')
   .description('create a production version of the app')
   .action(function() {
@@ -61,13 +70,17 @@ program
 program
   .version(version)
   .option('-f, --force', 'force on non-empty directory')
+  .option('--css', 'use boring old vanilla css (defaults to stylus)')
   .option('-p, --port', 'specify which port to run the server on')
   .parse(process.argv);
 
+process.on( 'SIGINT', function() {
+  console.log( "\ntidying up and closing down shop" )
+  console.log(exec('pwd'));
+  try {
+    exec('rm -rf .stage');
+    process.exit();
+  } catch(e) { console.log(e)}
 
 
-
-
-
-
-
+});

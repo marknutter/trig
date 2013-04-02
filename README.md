@@ -1,4 +1,8 @@
-trig
+TRIG
 ====
 
-Trig Famework
+A fastidiously opinionated angular.js framework
+
+## Installation
+
+    $ npm install -g express
