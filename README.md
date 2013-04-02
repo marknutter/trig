@@ -1,7 +1,7 @@
-TRIG
-====
+![trig logo](https://dl.dropbox.com/u/205542/trig_logo_teal.png)
 
-A fastidiously opinionated angular.js framework
+
+#A fastidiously opinionated angular.js framework
 
 ## Installation
 
@@ -28,16 +28,15 @@ A fastidiously opinionated angular.js framework
   * Driven by [Grunt](http://gruntjs.com/)
   * Live app refresh while you code
   * Test runner utilizing [Jasmine](http://pivotal.github.com/jasmine), [Phantomjs](http://phantomjs.org), and [Karma](http://karma-runner.github.com/0.8/index.html) (formerly Testacular)
-  * Support for SASS, styl, or less
-  * Bootstrap and Foundation support
+  * Support for [Stylus](http://learnboost.github.com/stylus/)
   * Stays up to date with the latest versions of angular.js and all other dependencies
 
 ## Philosophy
 
-  Trig is heavily inspired by Ruby on Rails. Contrary to backbone.js, Trig is a highly opinionated framework for angular.js developers
-  looking for a well defined starting point for their applications. Trig is the cure for [analysis paralysis](http://en.wikipedia.org/wiki/Analysis_paralysis). 
+  Trig is the cure for [analysis paralysis](http://en.wikipedia.org/wiki/Analysis_paralysis). 
   Setting up a well thought out structure for an angular.js applications with all testing, building, deployment, and processing tasks accounted for 
   can be daunting. Trig takes care of these details for you and allows you to concentrate on building your app immediately. 
+  Heavily inspired by Ruby on Rails, powered by Node, Grunt, and Karma. It keeps your apps [jauntily slim and extremely precise](http://www.merriam-webster.com/dictionary/trig).
   
 ## License
 
