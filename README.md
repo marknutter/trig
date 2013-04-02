@@ -20,6 +20,10 @@
  Run the test suite:
 
     $ trig test
+    
+ Create a production build:
+
+    $ trig build    
 
 ## Features
 
