@@ -5,18 +5,18 @@
  */
 
 
-var exec = require('child_process').exec
-var program = require('commander');
-var mkdirp = require('mkdirp');
-var pkg = require('../package.json');
-var version = pkg.version;
-var os = require('os');
+exec = require('child_process').exec
+program = require('commander');
+mkdirp = require('mkdirp');
+pkg = require('../package.json');
+version = pkg.version;
+os = require('os');
 fs = require('fs');
 npath = require('path');
 grunt = require('grunt');
 runner = require('karma').runner;
 server = require('karma').server;
-var eol = 'win32' == os.platform() ? '\r\n' : '\n';
+eol = 'win32' == os.platform() ? '\r\n' : '\n';
 base_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../');
 require('../lib/trig');
 require('../lib/gruntConfig');
@@ -43,7 +43,7 @@ program
   .command('test')
   .description('run the test suite')
   .action(function() {
-    grunt.task.run(['stagecopy', 'karma:watch']);
+    grunt.task.run(['env:development', 'stagecopy', 'karma:watch']);
     console.log('   \033[36mderiving tests\033[0m');
     grunt.task.start();
   });
@@ -52,18 +52,19 @@ program
   .command('clean')
   .description('clean up temporary files')
   .action(function() {
-    grunt.task.run(['clean']);
+    grunt.task.run(['clean:stage']);
     console.log('   \033[36mtidying up!\033[0m');
     grunt.task.start();
   });
 
 program
+
+program
   .command('build')
   .description('create a production version of the app')
   .action(function() {
-    grunt.task.run(['stagecopy']);
-    console.log(base_path + "deps/test/**/*");
-    console.log('   \033[36mformulating a build\033[0m');
+    grunt.task.run(['env:production', 'stagecopy', 'copy:production', 'concat', 'ngmin:app', 'uglify', 'cssmin', 'clean:production']);
+    console.log('   \033[36mtriangulating a production build\033[0m');
     grunt.task.start();
   });
 
@@ -76,11 +77,14 @@ program
 
 process.on( 'SIGINT', function() {
   console.log( "\ntidying up and closing down shop" )
-  console.log(exec('pwd'));
-  try {
-    exec('rm -rf .stage');
-    process.exit();
-  } catch(e) { console.log(e)}
-
-
+  exec('rm -rf .stage');
+  process.exit();
 });
+
+
+
+
+
+
+
+

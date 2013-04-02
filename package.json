@@ -1,7 +1,7 @@
 {
   "name": "trig",
   "description": "An AngularJS Web Framework",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Mark Nutter <marknutter@gmail.com>",
   "contributors": [
     {
@@ -39,7 +39,8 @@
     "grunt-regarde": "0.1.x",
     "grunt-env": "0.2.x",
     "stylus": "*",
-    "fluidity": "*"
+    "fluidity": "*",
+    "grunt-ngmin": "*"
   },
   "main": "index",
   "private": true,

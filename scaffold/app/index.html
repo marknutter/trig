@@ -2,7 +2,13 @@
 <html ng-app="app">
   <head>
     <title></title>
+    <!-- @if ENV='production' -->
+    <link rel="stylesheet" href="css/main.min.css"/>
+    <!-- @endif -->
+
+    <!-- @if ENV='development' -->
     <link rel="stylesheet" href="styles/main.css"/>
+    <!-- @endif -->
   </head>
   <body>
     <h1>Welcome to Trig!!!!</h1>
@@ -15,7 +21,8 @@
 
 
   <!-- @if ENV='production' -->
-  <script src="oqodo.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+  <script src="js/app.min.js"></script>
   <!-- @endif -->
 
   <!-- @if ENV='development' -->
