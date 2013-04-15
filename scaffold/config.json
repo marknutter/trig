@@ -1,0 +1,10 @@
+{
+
+  "domainName": "example.com",
+
+  "aws": {
+    "accessKeyId": "<your amazon web services access key>",
+    "secretAccessKey": "<your amazon web services secret key>"
+  }
+
+}

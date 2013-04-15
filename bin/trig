@@ -16,6 +16,10 @@ npath = require('path');
 grunt = require('grunt');
 runner = require('karma').runner;
 server = require('karma').server;
+AWS = require('aws-sdk');
+try {
+  trigConfig = grunt.file.readJSON('config.json');
+} catch (e) { trigConfig = null }
 eol = 'win32' == os.platform() ? '\r\n' : '\n';
 base_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../');
 require('../lib/trig');
@@ -58,12 +62,19 @@ program
   });
 
 program
+  .command('deploy')
+  .description('deploy to a Amazon S3. Add your credentials to config.json')
+  .action(function() {
+    grunt.task.run(['build:production', 'createS3BucketWebsite', 's3', 'openS3Url']);
+    console.log('   \033[36mdeploying to S3\033[0m');
+    grunt.task.start();
+  });
 
 program
   .command('build')
   .description('create a production version of the app')
   .action(function() {
-    grunt.task.run(['env:production', 'stagecopy', 'copy:production', 'concat', 'ngmin:app', 'uglify', 'cssmin', 'clean:production']);
+    grunt.task.run(['build:production']);
     console.log('   \033[36mtriangulating a production build\033[0m');
     grunt.task.start();
   });
