@@ -24,11 +24,17 @@
  Create a production build:
 
     $ trig build    
+    
+ Deploy to Amazon S3:
+
+    $ trig deploy
 
 ## Features
 
   * Creates a well organized angular.js application following up-to-date best practices
-  * Turnkey build and deployment processes
+  * Turnkey build, test, and deployment processes
+  * Simple deployment to an Amazon S3 account for easy, auto-scaling hosting
+  * Relies on [Parse](http://parse.com) or [Firebase](http://firebase.com) for data storage and retrieval. No server side code necessary!
   * Driven by [Grunt](http://gruntjs.com/)
   * Live app refresh while you code
   * Test runner utilizing [Jasmine](http://pivotal.github.com/jasmine), [Phantomjs](http://phantomjs.org), and [Karma](http://karma-runner.github.com/0.8/index.html) (formerly Testacular)
