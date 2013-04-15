@@ -1,7 +1,7 @@
 ![trig logo](https://dl.dropbox.com/u/205542/trig_logo_teal.png)
 
 
-#A Fastidiously Opinionated Angular.js Framework
+#A Fastidiously Opinionated, Curiously Efficient Web Framework for Angular.js
 
 ## Installation
 
