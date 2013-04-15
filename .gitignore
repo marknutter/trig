@@ -8,3 +8,4 @@ xcuserdata/
 *.sublime-workspace
 node_modules
 local.properties
+*.tgz
