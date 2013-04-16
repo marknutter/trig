@@ -16,6 +16,7 @@ npath = require('path');
 grunt = require('grunt');
 runner = require('karma').runner;
 server = require('karma').server;
+jf = require('jsonfile');
 AWS = require('aws-sdk');
 try {
   trigConfig = grunt.file.readJSON('config.json');
@@ -65,9 +66,27 @@ program
   .command('deploy')
   .description('deploy to a Amazon S3. Add your credentials to config.json')
   .action(function() {
-    grunt.task.run(['build:production', 'createS3BucketWebsite', 's3', 'openS3Url']);
-    console.log('   \033[36mdeploying to S3\033[0m');
-    grunt.task.start();
+
+    if (!trigConfig.aws.accessKeyId || !trigConfig.aws.secretAccessKey) {
+      console.log('   \033[36mAWS credentials missing\033[0m');
+      program.prompt('Enter your AWS access key id: ', function(accessKey) {
+        trigConfig.aws.accessKeyId = accessKey;
+        program.prompt('Enter your AWS secret key: ', function(secretKey) {
+          trigConfig.aws.secretAccessKey = secretKey;
+          trig.updateConfigFile();
+          deploy();
+        })
+      })
+    } else {
+      deploy()
+    }
+
+    function deploy() {
+      grunt.task.run(['build:production', 'createS3BucketWebsite', 's3', 'openS3Url']);
+      console.log('   \033[36mdeploying to S3\033[0m');
+      grunt.task.start();
+    }
+
   });
 
 program
