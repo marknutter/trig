@@ -27,7 +27,11 @@ require('../lib/trig');
 require('../lib/gruntConfig');
 require('../lib/tasks');
 
+
 grunt.initConfig(gruntConfig);
+
+program
+  .option('--e2e', 'run edge to edge test suite')
 
 program
   .command('new <path>')
@@ -48,7 +52,13 @@ program
   .command('test')
   .description('run the test suite')
   .action(function() {
-    grunt.task.run(['env:development', 'stagecopy', 'karma:watch']);
+    console.log('e2e? ' + program.e2e);
+    if (program.e2e) {
+      grunt.task.run(['env:test', 'stagecopy', 'connect:server', 'karma:e2e']);
+    } else {
+      grunt.task.run(['env:test', 'stagecopy', 'karma:watch']);
+    }
+
     console.log('   \033[36mderiving tests\033[0m');
     grunt.task.start();
   });
@@ -82,7 +92,7 @@ program
     }
 
     function deploy() {
-      grunt.task.run(['build:production', 'createS3BucketWebsite', 's3', 'openS3Url']);
+      grunt.task.run(['build:production', 'createS3BucketWebsite', 's3']);
       console.log('   \033[36mdeploying to S3\033[0m');
       grunt.task.start();
     }
