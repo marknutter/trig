@@ -27,6 +27,7 @@ require('../lib/trig');
 require('../lib/gruntConfig');
 require('../lib/tasks');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
 grunt.initConfig(gruntConfig);
 
@@ -73,6 +74,13 @@ program
   });
 
 program
+  .command('generate')
+  .description('scaffold generator')
+  .action(function(component, name){
+    console.log("component: " + component + ", name: " + name);
+  });
+
+program
   .command('deploy')
   .description('deploy to a Amazon S3. Add your credentials to config.json')
   .action(function() {
@@ -104,6 +112,7 @@ program
   .description('create a production version of the app')
   .action(function() {
     grunt.task.run(['build:production']);
+    grunt.task.run(['build:native']);
     console.log('   \033[36mtriangulating a production build\033[0m');
     grunt.task.start();
   });
