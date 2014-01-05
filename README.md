@@ -6,25 +6,25 @@
 ## Installation
 
     $ npm install -g trig
-    
+
 ## Quick Start
 
  Generate a boilerplate angular.js app:
 
-    $ trig /foo && cd /foo
+    $ trig new foo && cd foo
 
  Start the server:
 
     $ trig server
-    
+
  Run the test suite:
 
     $ trig test
-    
+
  Create a production build:
 
-    $ trig build    
-    
+    $ trig build
+
  Deploy to Amazon S3:
 
     $ trig deploy
@@ -43,11 +43,11 @@
 
 ## Philosophy
 
-  Trig is the cure for [analysis paralysis](http://en.wikipedia.org/wiki/Analysis_paralysis). 
-  Setting up a well thought out structure for an angular.js applications with all testing, building, deployment, and processing tasks accounted for 
-  can be daunting. Trig takes care of these details for you and allows you to concentrate on building your app immediately. 
+  Trig is the cure for [analysis paralysis](http://en.wikipedia.org/wiki/Analysis_paralysis).
+  Setting up a well thought out structure for an angular.js applications with all testing, building, deployment, and processing tasks accounted for
+  can be daunting. Trig takes care of these details for you and allows you to concentrate on building your app immediately.
   Heavily inspired by Ruby on Rails, powered by Node, Grunt, and Karma. It keeps your apps [jauntily slim and extremely precise](http://www.merriam-webster.com/dictionary/trig).
-  
+
 ## License
 
 (The MIT License)
