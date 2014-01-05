@@ -21,6 +21,9 @@ AWS = require('aws-sdk');
 try {
   trigConfig = grunt.file.readJSON('config.json');
 } catch (e) { trigConfig = null }
+try {
+  bowerConfig = grunt.file.readJSON('bower.json');
+} catch (e) { bowerConfig = null }
 eol = 'win32' == os.platform() ? '\r\n' : '\n';
 base_path = npath.join(npath.dirname(fs.realpathSync(__filename)), '../');
 require('../lib/trig');
@@ -38,9 +41,16 @@ program
   .command('new <path>')
   .description('create a new trig app at the given path')
   .action(function(path){
-    console.log("creating a new app!");
-    trig.createApp(path);
+    trig.newApp(path);
   });
+
+program
+  .command('init')
+  .description('init a new trig app')
+  .action(function() {
+    console.log("creating a new app!");
+    trig.initApp();
+  })
 
 program
   .command('server')
@@ -60,7 +70,7 @@ program
       grunt.task.run(['env:test', 'stagecopy', 'karma:watch']);
     }
 
-    console.log('   \033[36mderiving tests\033[0m');
+    console.log('\033[36mderiving tests\033[0m');
     grunt.task.start();
   });
 
@@ -69,7 +79,7 @@ program
   .description('clean up temporary files')
   .action(function() {
     grunt.task.run(['clean:stage']);
-    console.log('   \033[36mtidying up!\033[0m');
+    console.log('\033[36mtidying up!\033[0m');
     grunt.task.start();
   });
 
@@ -86,7 +96,7 @@ program
   .action(function() {
 
     if (!trigConfig.aws.accessKeyId || !trigConfig.aws.secretAccessKey) {
-      console.log('   \033[36mAWS credentials missing\033[0m');
+      console.log('\033[36mAWS credentials missing\033[0m');
       program.prompt('Enter your AWS access key id: ', function(accessKey) {
         trigConfig.aws.accessKeyId = accessKey;
         program.prompt('Enter your AWS secret key: ', function(secretKey) {
@@ -101,7 +111,7 @@ program
 
     function deploy() {
       grunt.task.run(['build:production', 'createS3BucketWebsite', 's3']);
-      console.log('   \033[36mdeploying to S3\033[0m');
+      console.log('\033[36mdeploying to S3\033[0m');
       grunt.task.start();
     }
 
@@ -113,9 +123,19 @@ program
   .action(function() {
     grunt.task.run(['build:production']);
     grunt.task.run(['build:native']);
-    console.log('   \033[36mtriangulating a production build\033[0m');
+    console.log('\033[36mtriangulating a production build\033[0m');
     grunt.task.start();
   });
+
+program
+  .command('deps')
+  .description('deps')
+  .action(function() {
+    grunt.task.run(['installDeps']);
+    console.log('\033[36minstalling dependencies\033[0m');
+    grunt.task.start();
+  })
+
 
 program
   .version(version)

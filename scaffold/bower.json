@@ -1,0 +1,13 @@
+{
+  "name": "my-project",
+  "dependencies": {
+    "angular": "*",
+    "angular-resource": "*",
+    "angular-route": "*",
+    "angular-cookies": "*",
+    "angular-loader": "*",
+    "angular-sanitize": "*",
+    "angular-ui": "*",
+    "bootstrap": "*"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "trig",
   "description": "An AngularJS Web Framework",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": {
     "name": "Mark Nutter",
     "email": "marknutter@gmail.com"

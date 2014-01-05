@@ -2,42 +2,48 @@
 <html ng-app="app">
   <head>
     <title></title>
+
+
+
     <!-- @if ENV='production' -->
     <link rel="stylesheet" href="css/main.min.css"/>
     <!-- @endif -->
 
     <!-- @if ENV='development' -->
+    <link rel="stylesheet" href="vendor/angular-csp.css"/>
+    <link rel="stylesheet" href="vendor/angular-ui.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap.css"/>
     <link rel="stylesheet" href="styles/main.css"/>
     <!-- @endif -->
   </head>
   <body>
-    <h1>Welcome to Trig!!!!</h1>
-
-    <ng-view></ng-view>
-
-
+    <div class="container">
+      <ng-view></ng-view>
+    </div>
 
 
+    <!-- @if ENV='production' -->
+    <script src="js/app.min.js"></script>
+    <!-- @endif -->
 
-
-  <!-- @if ENV='production' -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
-  <script src="js/app.min.js"></script>
-  <!-- @endif -->
-
-  <!-- @if ENV='development' -->
-  <!-- libs -->
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular/angular-resource.js"></script>
-  <!-- app -->
-  <script src="app.js"></script>
-  <!-- controllers -->
-  <script src="controllers/MainController.js"></script>
-  <!-- models -->
-  <!-- directives -->
-  <!-- services -->
-  <!-- filters -->
-  <!-- @endif -->
-
+    <!-- @if ENV='development' -->
+    <!-- libs -->
+    <script src="vendor/angular.js"></script>
+    <script src="vendor/angular-cookies.js"></script>
+    <script src="vendor/angular-resource.js"></script>
+    <script src="vendor/angular-route.js"></script>
+    <script src="vendor/angular-loader.js"></script>
+    <script src="vendor/angular-sanitize.js"></script>
+    <script src="vendor/angular-ui.js"></script>
+    <script src="vendor/angular-ui-ieshiv.js"></script>
+    <!-- app -->
+    <script src="app.js"></script>
+    <!-- controllers -->
+    <script src="controllers/MainController.js"></script>
+    <!-- models -->
+    <!-- directives -->
+    <!-- services -->
+    <!-- filters -->
+    <!-- @endif -->
   </body>
 </html>
