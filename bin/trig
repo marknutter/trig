@@ -55,8 +55,8 @@ program
 program
   .command('server')
   .description('run the trig app server')
-  .action(function() {
-    trig.runServer();
+  .action(function(env) {
+    trig.runServer(env);
   });
 
 program
@@ -119,10 +119,10 @@ program
 
 program
   .command('build')
-  .description('create a production version of the app')
-  .action(function() {
-    grunt.task.run(['build:production']);
-    grunt.task.run(['build:native']);
+  .description('create a build of the app')
+  .action(function(type) {
+    grunt.task.run(['build:' + type]);
+    // grunt.task.run(['build:native']);
     console.log('\033[36mtriangulating a production build\033[0m');
     grunt.task.start();
   });

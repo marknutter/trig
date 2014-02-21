@@ -1,7 +1,7 @@
 {
   "name": "trig",
   "description": "An AngularJS Web Framework",
-  "version": "0.0.4",
+  "version": "0.0.3",
   "author": {
     "name": "Mark Nutter",
     "email": "marknutter@gmail.com"
@@ -46,9 +46,12 @@
     "grunt-replace": "*",
     "grunt-bower-task": "*",
     "grunt-exec": "*",
+    "grunt-html2js": "*",
     "stylus": "*",
     "fluidity": "*",
-    "grunt-ngmin": "0.0.3",
+    "grunt-ngmin": "*",
+    "grunt-angular-templates": "*",
+    "grunt-contrib-htmlmin": "*",
     "aws-sdk": "*",
     "grunt-s3": "~0.1.0",
     "jsonfile": "0.0.1"
