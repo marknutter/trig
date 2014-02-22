@@ -122,7 +122,6 @@ program
   .description('create a build of the app')
   .action(function(type) {
     grunt.task.run(['build:' + type]);
-    // grunt.task.run(['build:native']);
     console.log('\033[36mtriangulating a production build\033[0m');
     grunt.task.start();
   });

@@ -12,7 +12,9 @@
       "email": "marknutter@gmail.com"
     }
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-contrib-connect": "~0.7.0"
+  },
   "keywords": [
     "trig",
     "framework",
@@ -32,7 +34,6 @@
     "trig": "./bin/trig"
   },
   "dependencies": {
-    "connect": "2.7.3",
     "commander": "0.6.1",
     "mkdirp": "~0.3.4",
     "buffer-crc32": "~0.2.1",
