@@ -37,7 +37,7 @@
   * Relies on [Parse](http://parse.com) or [Firebase](http://firebase.com) for data storage and retrieval. No server side code necessary!
   * Driven by [Grunt](http://gruntjs.com/)
   * Live app refresh while you code
-  * Test runner utilizing [Jasmine](http://pivotal.github.com/jasmine), [Phantomjs](http://phantomjs.org), and [Karma](http://karma-runner.github.com/0.8/index.html) (formerly Testacular)
+  * Test runner utilizing [Jasmine](https://jasmine.github.io/), [Phantomjs](http://phantomjs.org), and [Karma](http://karma-runner.github.com/0.8/index.html) (formerly Testacular)
   * Support for [Stylus](http://learnboost.github.com/stylus/)
   * Stays up to date with the latest versions of angular.js and all other dependencies
 
